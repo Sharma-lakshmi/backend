@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -32,6 +33,7 @@ app.use((req, res, next) => {
   throw error;
 });
 
+//delete the image file if error occurred while creating the data
 app.use((error, req, res, next) => {
   if (req.file) {
     fs.unlink(req.file.path, (err) => {

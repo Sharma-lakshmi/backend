@@ -1,11 +1,11 @@
 const { v4: uuidv4 } = require('uuid');
 const { validationResult } = require('express-validator');
+const mongoose = require('mongoose');
 
 const HttpError = require('../models/http-error');
 const getCoordsForAddress = require('../util/location');
 const Place = require('../models/place');
 const User = require('../models/user');
-const { default: mongoose } = require('mongoose');
 
 /* ------- Get Places by id --------------- */
 const getPlaceById = async (req, res, next) => {
@@ -72,7 +72,11 @@ const createPlace = async (req, res, next) => {
     );
   }
 
-  const { title, description, address, creator } = req.body;
+  //const { title, description, address, creator } = req.body;
+  const title = req.body.title;
+  const description = req.body.description;
+  const address = req.body.address;
+  const creator = req.body.creator;
 
   let coordinates;
   try {
@@ -81,7 +85,6 @@ const createPlace = async (req, res, next) => {
     return next(error);
   }
 
-  // const title = req.body.title;
   const createdPlace = new Place({
     title,
     description,
